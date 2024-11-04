@@ -1,2 +1,6 @@
-<p>login-page works!</p>
+<div class="input" [formGroup]="logInFormGroup">
+  <input type="email" size="40" formControlName="email">
+  <input type="password" size="40" formControlName="password">
+  <button class="logIn" (click)="logIn()">Войти</button>
+</div>
 <button class="home" (click)="goToHome()">Домой</button>
