@@ -43,15 +43,17 @@ builder.Services.AddAuthentication(opt =>
     });
 builder.Services.AddAuthorization();
 
-builder.Services.AddCors(x =>
-    x.AddDefaultPolicy(y => y.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
-
 var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCors();
+app.UseCors(policyBuilder => policyBuilder
+    .WithOrigins("http://localhost:4200")
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+    .AllowCredentials()
+);
 app.UseSwagger();
 app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
 app.MapGet("/", () => "Hello World!");

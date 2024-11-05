@@ -1,5 +1,4 @@
 using EmployeesCRUD;
-using FluentResults;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;

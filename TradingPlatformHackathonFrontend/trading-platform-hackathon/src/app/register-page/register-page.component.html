@@ -1,2 +1,31 @@
-<p>register-page works!</p>
+<div class="inputFields" [formGroup]="registerFormGroup">
+  <label>Электронная почта</label>
+  <p><input type="email" size="40" formControlName="email"></p>
+  <label>Пароль</label>
+  <p><input type="password" size="40" formControlName="password"></p>
+<!--  <label>Подтвердите пароль</label>-->
+<!--  <p><input type="password" size="40"></p>-->
+  <label>Имя</label>
+  <p><input type="text" size="40" formControlName="name"></p>
+  <label>Адрес</label>
+  <p><input type="text" size="40" formControlName="address"></p>
+  <label>Телефон</label>
+  <p><input type="tel" size="40" formControlName="phoneNumber">
+  </p>
+  <fieldset>
+    <legend>Какие предоставляете услуги?</legend>
+
+    <div>
+      <input type="radio" id="buyer" formControlName="roleId" value="2"/>
+      <label for="buyer">Закупщик</label>
+    </div>
+
+    <div>
+      <input type="radio" id="supplier" formControlName="roleId" value="3"/>
+      <label for="supplier">Поставщик</label>
+    </div>
+
+  </fieldset>
+</div>
+<button class="register" (click)="register()">Зарегистрироваться</button>
 <button class="home" (click)="goToHome()">Домой</button>

@@ -6,13 +6,22 @@ export interface LogInResponse {
   token: string
 }
 
-export interface LogInRequest{
+export interface LogInRequest {
   email: string,
   password: string
 }
 
-export interface ErrorModel{
+export interface ErrorModel {
   message: string
+}
+
+export interface RegisterRequest {
+  email: string,
+  password: string,
+  name: string,
+  address: string,
+  phoneNumber: string
+  role: number
 }
 
 @Injectable({providedIn: "root"})
@@ -28,4 +37,9 @@ export class HttpService {
     return this.http.post<LogInResponse>(url, logInRequest)
   }
 
+  register(value: RegisterRequest): Observable<void> {
+    const url: string = `${this.baseurl}/Register/Register`
+    return this.http.post<void>(url, value)
+
+  }
 }
