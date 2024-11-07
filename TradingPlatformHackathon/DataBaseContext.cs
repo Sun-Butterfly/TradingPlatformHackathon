@@ -7,6 +7,7 @@ public class DataBaseContext : DbContext
 {
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
+    public DbSet<PurchaseRequest> PurchaseRequests { get; set; } = null!;
 
     public DataBaseContext()
     {
@@ -52,5 +53,14 @@ public class DataBaseContext : DbContext
                     Name = "supplier"
                 }
             });
+        modelBuilder.Entity<PurchaseRequest>()
+            .HasOne(p => p.Buyer)
+            .WithMany(b => b.PurchaseRequestsAsBuyer)
+            .HasForeignKey(x => x.BuyerId);
+
+        modelBuilder.Entity<PurchaseRequest>()
+            .HasOne(p => p.Supplier)
+            .WithMany(s => s.PurchaseRequestsAsSupplier)
+            .HasForeignKey(x => x.SupplierId);
     }
 }

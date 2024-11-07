@@ -1,5 +1,6 @@
 using EmployeesCRUD;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.Register;
@@ -18,6 +19,7 @@ public class RegisterController : Controller
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody]RegisterUserRequestDto registerUserRequestDto)
     {
         var request = new RegisterRequest(

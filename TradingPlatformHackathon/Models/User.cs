@@ -12,4 +12,7 @@ public class User
 
     public long RoleId { get; set; }
     public Role Role { get; set; } = null!;
+
+    public List<PurchaseRequest> PurchaseRequestsAsBuyer { get; set; } = new();
+    public List<PurchaseRequest> PurchaseRequestsAsSupplier { get; set; } = new();
 }

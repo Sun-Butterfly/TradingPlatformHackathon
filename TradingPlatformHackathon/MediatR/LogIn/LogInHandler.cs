@@ -21,7 +21,7 @@ public class LogInHandler : IRequestHandler<LogInRequest, Result<LogInResponse>>
 
     public async Task<Result<LogInResponse>> Handle(LogInRequest request, CancellationToken cancellationToken)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == request.Email &&
+        var user = await _db.Users.Include(user => user.Role).FirstOrDefaultAsync(x => x.Email == request.Email &&
                                                             x.Password == request.Password,
             cancellationToken: cancellationToken);
         if (user is null)
@@ -34,7 +34,8 @@ public class LogInHandler : IRequestHandler<LogInRequest, Result<LogInResponse>>
         var claims = new List<Claim>
         {
             new Claim(type: ClaimTypes.Email, value: request.Email),
-            new Claim(type: ClaimTypes.Name,value: user.Name)
+            new Claim(type: ClaimTypes.Name,value: user.Name),
+            new Claim(type: ClaimTypes.Role, value: user.Role.Name)
         };
         var tokeOptions = new JwtSecurityToken(
             issuer: "https://localhost:5001",
