@@ -1,5 +1,6 @@
 using EmployeesCRUD;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.LogIn;
@@ -21,6 +22,7 @@ public class AuthController : Controller
     [HttpPost]
     [ProducesResponseType(typeof (LogInResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof (ErrorModel), StatusCodes.Status400BadRequest)]
+    [AllowAnonymous]
     public async Task<IActionResult> LogIn([FromBody]LogInRequest logInRequest)
     {
         var result = await _mediator.Send(logInRequest);

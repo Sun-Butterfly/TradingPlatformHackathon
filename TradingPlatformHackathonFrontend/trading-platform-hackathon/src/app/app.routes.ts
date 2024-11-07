@@ -4,6 +4,9 @@ import {RegisterPageComponent} from './register-page/register-page.component';
 import {LoginPageComponent} from './login-page/login-page.component';
 import {BuyerPageComponent} from './buyer-page/buyer-page.component';
 import {SupplierPageComponent} from './supplier-page/supplier-page.component';
+import {
+  CreatePurchaseRequestPageComponent
+} from './create-purchase-request-page/create-purchase-request-page.component';
 
 export const routes: Routes = [
   {
@@ -30,6 +33,10 @@ export const routes: Routes = [
   {
     path: 'supplier',
     component: SupplierPageComponent
+  },
+  {
+    path: 'create-purchase-request',
+    component: CreatePurchaseRequestPageComponent
   },
   {
     path: '**',
