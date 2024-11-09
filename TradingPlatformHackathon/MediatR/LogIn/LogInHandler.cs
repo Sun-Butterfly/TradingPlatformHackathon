@@ -35,7 +35,8 @@ public class LogInHandler : IRequestHandler<LogInRequest, Result<LogInResponse>>
         {
             new Claim(type: ClaimTypes.Email, value: request.Email),
             new Claim(type: ClaimTypes.Name,value: user.Name),
-            new Claim(type: ClaimTypes.Role, value: user.Role.Name)
+            new Claim(type: ClaimTypes.Role, value: user.Role.Name),
+            new Claim(type: "Id", value: user.Id.ToString())
         };
         var tokeOptions = new JwtSecurityToken(
             issuer: "https://localhost:5001",

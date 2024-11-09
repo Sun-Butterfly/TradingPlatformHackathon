@@ -22,17 +22,19 @@ public class BuyerController : Controller
     [Authorize(Roles = "admin, buyer")]
     public async Task<IActionResult> CreatePurchaseRequest([FromBody] PurchaseRequestDto purchaseRequestDto)
     {
+        var userId = HttpContext.GetUserId();
         var request = new CreatePurchaseRequestRequest(
             purchaseRequestDto.ProductName,
             purchaseRequestDto.ProductCount,
             purchaseRequestDto.Cost,
-            purchaseRequestDto.BuyerId
-            );
+            userId
+        );
         var result = await _mediator.Send(request);
         if (result.IsFailed)
         {
             return BadRequest(new ErrorModel(result.StringifyErrors()));
         }
+
         return Ok(result.Value);
     }
 }

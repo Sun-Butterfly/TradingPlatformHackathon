@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 using FluentResults;
 // using FluentValidation.Results;
 
@@ -16,4 +17,19 @@ public static class Extensions
     // {
     //     return string.Join(";", result.Errors.Select(x => x.ErrorMessage));
     // }
+
+    public static long GetUserId(this HttpContext context)
+    {
+        var idString = context.User.FindFirst("Id")?.Value;
+        if (idString is null)
+        {
+            throw new Exception("В токене не было ID");
+        }
+
+        if (long.TryParse(idString, out var id))
+        {
+            return id;
+        }
+        throw new Exception("В токене ID не число");
+    }
 }
