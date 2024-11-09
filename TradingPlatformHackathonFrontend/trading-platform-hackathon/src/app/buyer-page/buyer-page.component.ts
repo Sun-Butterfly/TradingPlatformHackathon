@@ -23,13 +23,17 @@ export class BuyerPageComponent implements OnInit {
   ngOnInit(): void {
     this.url = this.router.url;
     this.router.events.subscribe(x => {
-      this.url = this.router.url
+      this.url = this.router.url;
     });
   }
 
   goToCreatePurchaseRequest() {
     if (this.tokenService.getToken() == null) {
       return alert("Войдите в систему, чтобы продолжить")
+    }
+    if (this.tokenService.getRole() !== "buyer") {
+      alert("Вы не закупщик!")
+      return;
     }
     this.router.navigate(['create-purchase-request'])
   }

@@ -16,12 +16,25 @@ export class TokenService {
     return localStorage.getItem("authToken");
   }
 
-  logOut(){
+  logOut() {
     localStorage.removeItem("authToken");
   }
 
   isAuthorized() {
     return this.getToken() != null;
 
+  }
+
+  getRole(): string {
+    let token = this.getToken();
+    if (token === null) {
+      return "";
+    }
+
+    let data = token.split(".")[1];
+    data = window.atob(data)
+    let jwt = JSON.parse(data);
+    let role = jwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    return role;
   }
 }
