@@ -8,6 +8,7 @@ public class DataBaseContext : DbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<PurchaseRequest> PurchaseRequests { get; set; } = null!;
+    public DbSet<PurchaseResponse> PurchaseResponses { get; set; } = null!;
 
     public DataBaseContext()
     {
