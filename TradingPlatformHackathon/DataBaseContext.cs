@@ -62,5 +62,15 @@ public class DataBaseContext : DbContext
             .HasOne(p => p.Supplier)
             .WithMany(s => s.PurchaseRequestsAsSupplier)
             .HasForeignKey(x => x.SupplierId);
+        
+        modelBuilder.Entity<PurchaseResponse>()
+            .HasOne(p => p.Supplier)
+            .WithMany(s => s.PurchaseResponses)
+            .HasForeignKey(x => x.SupplierId);
+
+        modelBuilder.Entity<PurchaseResponse>()
+            .HasOne(x => x.PurchaseRequest)
+            .WithMany(y => y.PurchaseResponses)
+            .HasForeignKey(z => z.PurchaseRequestId);
     }
 }

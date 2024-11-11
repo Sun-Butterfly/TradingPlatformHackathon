@@ -6,6 +6,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using TradingPlatformHackathon;
+using TradingPlatformHackathon.Interfaces;
+using TradingPlatformHackathon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,6 +73,8 @@ builder.Services.AddAuthentication(opt =>
         };
     });
 builder.Services.AddAuthorization();
+
+builder.Services.AddScoped<IService,Service>();
 
 var app = builder.Build();
 

@@ -15,4 +15,5 @@ public class User
 
     public List<PurchaseRequest> PurchaseRequestsAsBuyer { get; set; } = new();
     public List<PurchaseRequest> PurchaseRequestsAsSupplier { get; set; } = new();
+    public List<PurchaseResponse> PurchaseResponses { get; set; } = new();
 }

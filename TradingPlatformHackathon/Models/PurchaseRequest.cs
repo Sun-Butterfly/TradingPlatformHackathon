@@ -12,4 +12,6 @@ public class PurchaseRequest
     
     public long? SupplierId { get; set; }
     public User? Supplier { get; set; }
+    
+    public List<PurchaseResponse>? PurchaseResponses { get; set; }
 }
