@@ -8,4 +8,4 @@ public record CreatePurchaseRequestRequest(
     long ProductCount,
     long Cost,
     long BuyerId
-    ) : IRequest<Result<CreatePurchaseRequestResponse>>;
+) : IRequest<Result<CreatePurchaseRequestResponse>>;

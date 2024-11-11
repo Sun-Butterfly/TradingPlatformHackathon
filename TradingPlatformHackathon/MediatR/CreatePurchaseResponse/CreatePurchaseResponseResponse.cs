@@ -1,0 +1,3 @@
+namespace TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
+
+public record CreatePurchaseResponseResponse();
