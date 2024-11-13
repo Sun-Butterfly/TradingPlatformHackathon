@@ -21,7 +21,8 @@ public class GetAllPurchaseRequestsHandler : IRequestHandler<GetAllPurchaseReque
                 x.Id,
                 x.ProductName,
                 x.ProductCount,
-                x.Cost)).ToListAsync(cancellationToken: cancellationToken);
+                x.Cost,
+                x.BuyerId)).ToListAsync(cancellationToken: cancellationToken);
         return Result.Ok(new GetAllPurchaseRequestsResponse(purchaseRequests));
     }
 }

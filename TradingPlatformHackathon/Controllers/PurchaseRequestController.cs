@@ -19,7 +19,7 @@ public class PurchaseRequestController : Controller
     }
 
     [HttpGet]
-    [Authorize(Roles = "admin, buyer, supplier")]
+    [AllowAnonymous]
     public async Task<IActionResult> GetAllPurchaseRequests()
     {
         var request = new GetAllPurchaseRequestsRequest();

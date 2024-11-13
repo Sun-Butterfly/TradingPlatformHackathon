@@ -24,6 +24,15 @@ export interface RegisterRequest {
   role: number
 }
 
+export interface PurchaseRequest {
+  id: number,
+  productName: string,
+  productCount: number,
+  cost: number,
+  buyerId: number
+}
+
+
 @Injectable({providedIn: "root"})
 export class HttpService {
 
@@ -42,4 +51,10 @@ export class HttpService {
     return this.http.post<void>(url, value)
 
   }
+
+  getAllPurchaseRequests(): Observable<PurchaseRequest[]> {
+    const url: string = `${this.baseurl}/PurchaseRequest/GetAllPurchaseRequests`
+    return this.http.get<PurchaseRequest[]>(url)
+  }
+
 }
