@@ -1,0 +1,48 @@
+<div class="myRequests">
+  <h1>Мои заявки</h1>
+  <table>
+    <tbody>
+    <tr>
+      <th>ID заявки</th>
+      <th>Наименование продукта/услуги</th>
+      <th>Количество продукта/услуги</th>
+      <th>Стоимость, предложенная Вами</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let purchaseRequest of purchaseRequestsByBuyerId, let i = index" (click)="setActivePurchaseRequestIndex(i)">
+      <td>{{purchaseRequest.id}}</td>
+      <td>{{purchaseRequest.productName}}</td>
+      <td>{{purchaseRequest.productCount}}</td>
+      <td>{{purchaseRequest.cost}}</td>
+      <td>
+        <button class="buttonRedact" (click)="goToRedactPurchaseResponse(i)">Редактировать</button>
+        <button class="buttonDelete" (click)="goToDeletePurchaseResponse(i)">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<div class="responses">
+  <h1>Отклики на мои заявки</h1>
+  <table>
+    <tbody>
+    <tr>
+      <th>ID отклика</th>
+      <th>Id заявки</th>
+      <th>Стоимость, предложенная поставщиком</th>
+      <th>Комментарий поставщика</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let purchaseResponse of purchaseResponsesByBuyerId, let i = index" (click)="setActivePurchaseResponseIndex(i)">
+      <td>{{purchaseResponse.id}}</td>
+      <td>{{purchaseResponse.purchaseRequestId}}</td>
+      <td>{{purchaseResponse.cost}}</td>
+      <td>{{purchaseResponse.comment}}</td>
+      <td>
+        <button class="buttonResponse" (click)="goToAcceptPurchaseResponse(i)">Принять отклик</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<button class="home" (click)="goToHome()">Домой</button>

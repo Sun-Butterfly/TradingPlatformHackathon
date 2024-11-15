@@ -8,6 +8,10 @@ import {
   CreatePurchaseRequestPageComponent
 } from './create-purchase-request-page/create-purchase-request-page.component';
 import {CreatePurchaseResponseComponent} from './create-purchase-response/create-purchase-response.component';
+import {BuyerPersonalAccountPageComponent} from './buyer-personal-account-page/buyer-personal-account-page.component';
+import {
+  SupplierPersonalAccountPageComponent
+} from './supplier-personal-account-page/supplier-personal-account-page.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +46,14 @@ export const routes: Routes = [
   {
     path: 'create-purchase-response/:id',
     component: CreatePurchaseResponseComponent
+  },
+  {
+    path: 'account_b',
+    component: BuyerPersonalAccountPageComponent
+  },
+  {
+    path: 'account_s',
+    component: SupplierPersonalAccountPageComponent
   },
   {
     path: '**',

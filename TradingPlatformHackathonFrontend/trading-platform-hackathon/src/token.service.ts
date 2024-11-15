@@ -37,4 +37,17 @@ export class TokenService {
     let role = jwt["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
     return role;
   }
+
+  getId():number {
+    let token = this.getToken();
+    if(token === null){
+      return -1;
+    }
+
+    let data = token.split(".")[1];
+    data = window.atob(data)
+    let jwt = JSON.parse(data);
+    let id  = ~~jwt["Id"]
+    return id;
+  }
 }

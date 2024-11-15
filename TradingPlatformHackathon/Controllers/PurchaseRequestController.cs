@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.GetAllPurchaseRequests;
+using TradingPlatformHackathon.MediatR.GetPurchaseRequestsByBuyerId;
 
 namespace TradingPlatformHackathon.Controllers;
 
@@ -30,6 +31,20 @@ public class PurchaseRequestController : Controller
             return BadRequest(new ErrorModel(result.StringifyErrors()));
         }
 
+        return Ok(result.Value.PurchaseRequests);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "admin, buyer")]
+    public async Task<IActionResult> GetPurchaseRequestByBuyerId(long buyerId)
+    {
+        var request = new GetPurchaseRequestByBuyerIdRequest(buyerId);
+        var result = await _mediator.Send(request);
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+        
         return Ok(result.Value.PurchaseRequests);
     }
 }

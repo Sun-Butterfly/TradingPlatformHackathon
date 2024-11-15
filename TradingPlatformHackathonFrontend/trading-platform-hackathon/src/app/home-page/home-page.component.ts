@@ -49,4 +49,16 @@ export class HomePageComponent implements OnInit {
   isAuthorize() {
     return this.tokenService.isAuthorized();
   }
+
+  goToPersonalAccount() {
+    if (this.tokenService.getToken() === null) {
+      return alert("Войдите в систему, чтобы продолжить")
+    }
+    if (this.tokenService.getRole()==="buyer") {
+      this.router.navigate(['account_b'])
+    }
+    if (this.tokenService.getRole()==="supplier") {
+      this.router.navigate(['account_s'])
+    }
+  }
 }

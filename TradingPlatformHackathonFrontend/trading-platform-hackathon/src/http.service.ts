@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {TokenService} from './token.service';
 
 export interface LogInResponse {
   token: string
@@ -32,11 +33,17 @@ export interface PurchaseRequest {
   buyerId: number
 }
 
+export interface PurchaseResponse {
+  id: number,
+  purchaseRequestId: number,
+  cost: number,
+  comment: string
+}
 
 @Injectable({providedIn: "root"})
 export class HttpService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private tokenService: TokenService) {
   }
 
   baseurl: string = "http://localhost:5141"
@@ -57,4 +64,12 @@ export class HttpService {
     return this.http.get<PurchaseRequest[]>(url)
   }
 
+  getPurchaseRequestsByBuyerId(id: number): Observable<PurchaseRequest[]> {
+    const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestByBuyerId`
+    return this.http.get<PurchaseRequest[]>(url, {
+      params: {
+        buyerId: id
+      }
+    })
+  }
 }

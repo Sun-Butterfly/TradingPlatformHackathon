@@ -13,14 +13,15 @@ import {TokenService} from '../../token.service';
   templateUrl: './supplier-page.component.html',
   styleUrl: './supplier-page.component.scss'
 })
-export class SupplierPageComponent implements OnInit{
+export class SupplierPageComponent implements OnInit {
 
   url: string = ''
   purchaseRequests: PurchaseRequest[] = [];
   activePurchaseRequestIndex: number = -1;
 
-  constructor(private router: Router, private http: HttpService,private tokenService: TokenService) {
+  constructor(private router: Router, private http: HttpService, private tokenService: TokenService) {
   }
+
   goToHome() {
     this.router.navigate(['home'])
   }
@@ -53,9 +54,9 @@ export class SupplierPageComponent implements OnInit{
     this.router.navigate(['create-purchase-response', this.purchaseRequests[i].id.toString()])
   }
 
-  getAllPurchaseRequests(){
-this.http.getAllPurchaseRequests().subscribe(purchaseRequests => {
-  this.purchaseRequests = purchaseRequests;
-})
+  getAllPurchaseRequests() {
+    this.http.getAllPurchaseRequests().subscribe(purchaseRequests => {
+      this.purchaseRequests = purchaseRequests;
+    })
   }
 }
