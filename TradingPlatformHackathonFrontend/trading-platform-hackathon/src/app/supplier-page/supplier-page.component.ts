@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {HttpService, PurchaseRequest} from '../../http.service';
 import {NgForOf} from '@angular/common';
@@ -17,7 +17,7 @@ export class SupplierPageComponent implements OnInit{
 
   url: string = ''
   purchaseRequests: PurchaseRequest[] = [];
-  activePurchaseRequest: number = -1;
+  activePurchaseRequestIndex: number = -1;
 
   constructor(private router: Router, private http: HttpService,private tokenService: TokenService) {
   }
@@ -33,16 +33,15 @@ export class SupplierPageComponent implements OnInit{
     this.getAllPurchaseRequests();
   }
 
-  setActivePurchaseRequest(i: number) {
-    if (this.activePurchaseRequest === i) {
-      this.activePurchaseRequest = -1;
+  setActivePurchaseRequestIndex(i: number) {
+    if (this.activePurchaseRequestIndex === i) {
+      this.activePurchaseRequestIndex = -1;
     } else {
-      this.activePurchaseRequest = i;
+      this.activePurchaseRequestIndex = i;
     }
   }
 
   goToCreatePurchaseResponse(i: number) {
-    let purchaseRequest = this.purchaseRequests[i];
 
     if (this.tokenService.getToken() == null) {
       return alert("Войдите в систему, чтобы продолжить")
@@ -51,7 +50,7 @@ export class SupplierPageComponent implements OnInit{
       alert("Вы не поставщик!")
       return;
     }
-    this.router.navigate(['create-purchase-response'])
+    this.router.navigate(['create-purchase-response', this.purchaseRequests[i].id.toString()])
   }
 
   getAllPurchaseRequests(){

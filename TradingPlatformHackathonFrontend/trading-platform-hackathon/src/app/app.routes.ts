@@ -7,6 +7,7 @@ import {SupplierPageComponent} from './supplier-page/supplier-page.component';
 import {
   CreatePurchaseRequestPageComponent
 } from './create-purchase-request-page/create-purchase-request-page.component';
+import {CreatePurchaseResponseComponent} from './create-purchase-response/create-purchase-response.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,10 @@ export const routes: Routes = [
   {
     path: 'create-purchase-request',
     component: CreatePurchaseRequestPageComponent
+  },
+  {
+    path: 'create-purchase-response/:id',
+    component: CreatePurchaseResponseComponent
   },
   {
     path: '**',

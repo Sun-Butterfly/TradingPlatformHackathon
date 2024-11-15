@@ -8,7 +8,7 @@
     <th>ID закупщика</th>
     <th></th>
   </tr>
-  <tr *ngFor="let purchaseRequest of purchaseRequests, let i = index" (click)="setActivePurchaseRequest(i)">
+  <tr *ngFor="let purchaseRequest of purchaseRequests, let i = index" (click)="setActivePurchaseRequestIndex(i)">
     <td>{{purchaseRequest.id}}</td>
     <td>{{purchaseRequest.productName}}</td>
     <td>{{purchaseRequest.productCount}}</td>
