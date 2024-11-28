@@ -1,1 +1,10 @@
-<div>Отклик на заявку № {{activePurchaseRequestId}}</div>
+<div>Отклик на заявку №{{activePurchaseRequestId}}</div>
+
+<div class="inputFields" [formGroup]="createPurchaseResponseFormGroup">
+  <label>Предлагаемая цена</label>
+  <p><input type="text" formControlName="cost"></p>
+  <label>Комментарий</label>
+  <p><input type="text" formControlName="comment"></p>
+</div>
+<button class="create" (click)="createPurchaseResponse()">Создать</button>
+<button class="cancel" (click)="goToCancelCreate()">Отмена</button>

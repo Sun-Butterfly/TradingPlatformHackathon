@@ -25,6 +25,7 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   ngOnInit(): void {
     let id = this.tokenService.getId();
     this.getPurchaseRequestsByBuyerId(id)
+    this.getPurchaseResponsesByBuyerId(id)
   }
 
   setActivePurchaseRequestIndex(i: number) {
@@ -60,7 +61,12 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   }
 
   getPurchaseRequestsByBuyerId(id: number) {
-    this.http.getPurchaseRequestsByBuyerId(id).subscribe(purchaseResponsesByBuyerId =>
-      this.purchaseRequestsByBuyerId = purchaseResponsesByBuyerId);
+    this.http.getPurchaseRequestsByBuyerId(id).subscribe(purchaseRequestsByBuyerId =>
+      this.purchaseRequestsByBuyerId = purchaseRequestsByBuyerId);
+  }
+
+  getPurchaseResponsesByBuyerId(id: number){
+    this.http.getPurchaseResponsesByBuyerId(id).subscribe(purchaseResponsesByBuyerId =>
+    this.purchaseResponsesByBuyerId = purchaseResponsesByBuyerId)
   }
 }

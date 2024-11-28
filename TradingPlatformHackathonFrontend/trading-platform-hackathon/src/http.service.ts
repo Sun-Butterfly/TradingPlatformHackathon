@@ -40,6 +40,14 @@ export interface PurchaseResponse {
   comment: string
 }
 
+export interface CreatePurchaseResponseDto {
+  purchaseRequestId: number,
+  cost: number,
+  comment: string
+}
+
+
+
 @Injectable({providedIn: "root"})
 export class HttpService {
 
@@ -67,6 +75,20 @@ export class HttpService {
   getPurchaseRequestsByBuyerId(id: number): Observable<PurchaseRequest[]> {
     const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestByBuyerId`
     return this.http.get<PurchaseRequest[]>(url, {
+      params: {
+        buyerId: id
+      }
+    })
+  }
+
+  createPurchaseResponse(request: CreatePurchaseResponseDto): Observable<void> {
+    const url: string = `${this.baseurl}/Supplier/CreatePurchaseResponse`;
+    return this.http.post<void>(url, request)
+  }
+
+  getPurchaseResponsesByBuyerId(id: number): Observable<PurchaseResponse[]> {
+    const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesByBuyerId`
+    return this.http.get<PurchaseResponse[]>(url,{
       params: {
         buyerId: id
       }
