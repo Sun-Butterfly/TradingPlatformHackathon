@@ -1,1 +1,10 @@
-<p>create-purchase-request-page works!</p>
+<div class="inputFields" [formGroup]="createPurchaseRequestFormGroup">
+  <label>Наименование продукции/услуги</label>
+  <p><input type="text" formControlName="productName"></p>
+  <label>Количество продукции/услуги</label>
+  <p><input type="text" formControlName="productCount"></p>
+  <label>Стоимость, которую вы готовы предложить за закупку</label>
+  <p><input type="text" formControlName="cost"></p>
+</div>
+<button class="create" (click)="createPurchaseRequest()">Создать</button>
+<button class="cancel" (click)="goToCancelCreate()">Отмена</button>

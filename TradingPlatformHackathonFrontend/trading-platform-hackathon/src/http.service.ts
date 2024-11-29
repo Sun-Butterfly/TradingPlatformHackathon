@@ -46,6 +46,12 @@ export interface CreatePurchaseResponseDto {
   comment: string
 }
 
+export interface CreatePurchaseRequestDto {
+  productName: string,
+  productCount: number,
+  cost: number
+}
+
 
 
 @Injectable({providedIn: "root"})
@@ -93,5 +99,10 @@ export class HttpService {
         buyerId: id
       }
     })
+  }
+
+  createPurchaseRequest(value: CreatePurchaseRequestDto):Observable<void> {
+    const url: string = `${this.baseurl}/Buyer/CreatePurchaseRequest`
+    return this.http.post<void>(url, value)
   }
 }
