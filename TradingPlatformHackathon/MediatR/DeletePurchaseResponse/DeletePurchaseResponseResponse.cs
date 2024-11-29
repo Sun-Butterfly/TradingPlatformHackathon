@@ -1,0 +1,3 @@
+namespace TradingPlatformHackathon.MediatR.DeletePurchaseResponse;
+
+public record DeletePurchaseResponseResponse();

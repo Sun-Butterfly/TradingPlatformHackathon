@@ -36,12 +36,17 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
     }
   }
 
-  goToRedactPurchaseResponse(i: number) {
+  goToRedactPurchaseRequest(i: number) {
 
   }
 
-  goToDeletePurchaseResponse(i: number) {
-
+  goToDeletePurchaseRequest(i: number) {
+    let purchaseRequestId = this.purchaseRequestsByBuyerId[i].id;
+    let buyerId = this.tokenService.getId();
+    this.http.deletePurchaseRequest(purchaseRequestId).subscribe(() =>{
+      this.getPurchaseRequestsByBuyerId(buyerId);
+      this.getPurchaseResponsesByBuyerId(buyerId)}
+    )
   }
 
   setActivePurchaseResponseIndex(i: number) {
@@ -65,8 +70,8 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
       this.purchaseRequestsByBuyerId = purchaseRequestsByBuyerId);
   }
 
-  getPurchaseResponsesByBuyerId(id: number){
+  getPurchaseResponsesByBuyerId(id: number) {
     this.http.getPurchaseResponsesByBuyerId(id).subscribe(purchaseResponsesByBuyerId =>
-    this.purchaseResponsesByBuyerId = purchaseResponsesByBuyerId)
+      this.purchaseResponsesByBuyerId = purchaseResponsesByBuyerId)
   }
 }

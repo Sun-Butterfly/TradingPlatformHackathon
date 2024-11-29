@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
+using TradingPlatformHackathon.MediatR.DeletePurchaseResponse;
 using TradingPlatformHackathon.MediatR.GetPurchaseResponsesByBuyerId;
 
 namespace TradingPlatformHackathon.Controllers;
@@ -46,6 +47,21 @@ public class PurchaseResponseController : Controller
             userId
         );
         var result = await _mediator.Send(request);
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+
+        return Ok(result.Value);
+    }
+    
+    [HttpDelete]
+    [Authorize(Roles = "admin, supplier")]
+    public async Task<IActionResult> DeletePurchaseResponse(long purchaseResponseId)
+    {
+        var request = new DeletePurchaseResponseRequest(purchaseResponseId);
+        var result = await _mediator.Send(request);
+        
         if (result.IsFailed)
         {
             return BadRequest(new ErrorModel(result.StringifyErrors()));

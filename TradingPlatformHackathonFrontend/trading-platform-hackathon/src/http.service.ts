@@ -105,4 +105,13 @@ export class HttpService {
     const url: string = `${this.baseurl}/PurchaseRequest/CreatePurchaseRequest`
     return this.http.post<void>(url, value)
   }
+
+  deletePurchaseRequest(purchaseRequestId: number):Observable<void> {
+    const url: string = `${this.baseurl}/PurchaseRequest/DeletePurchaseRequest`;
+    return this.http.delete<void>(url,{
+      params: {
+        purchaseRequestId: purchaseRequestId
+      }
+    });
+  }
 }
