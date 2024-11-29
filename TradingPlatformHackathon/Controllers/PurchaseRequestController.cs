@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
+using TradingPlatformHackathon.MediatR.CreatePurchaseRequest;
 using TradingPlatformHackathon.MediatR.GetAllPurchaseRequests;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsByBuyerId;
 
@@ -46,5 +47,25 @@ public class PurchaseRequestController : Controller
         }
         
         return Ok(result.Value.PurchaseRequests);
+    }
+    
+    [HttpPost]
+    [Authorize(Roles = "admin, buyer")]
+    public async Task<IActionResult> CreatePurchaseRequest([FromBody] PurchaseRequestDto purchaseRequestDto)
+    {
+        var userId = HttpContext.GetUserId();
+        var request = new CreatePurchaseRequestRequest(
+            purchaseRequestDto.ProductName,
+            purchaseRequestDto.ProductCount,
+            purchaseRequestDto.Cost,
+            userId
+        );
+        var result = await _mediator.Send(request);
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+
+        return Ok(result.Value);
     }
 }

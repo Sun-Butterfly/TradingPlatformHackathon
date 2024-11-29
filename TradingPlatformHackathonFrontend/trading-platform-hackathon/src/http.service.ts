@@ -88,7 +88,7 @@ export class HttpService {
   }
 
   createPurchaseResponse(request: CreatePurchaseResponseDto): Observable<void> {
-    const url: string = `${this.baseurl}/Supplier/CreatePurchaseResponse`;
+    const url: string = `${this.baseurl}/PurchaseResponse/CreatePurchaseResponse`;
     return this.http.post<void>(url, request)
   }
 
@@ -102,7 +102,7 @@ export class HttpService {
   }
 
   createPurchaseRequest(value: CreatePurchaseRequestDto):Observable<void> {
-    const url: string = `${this.baseurl}/Buyer/CreatePurchaseRequest`
+    const url: string = `${this.baseurl}/PurchaseRequest/CreatePurchaseRequest`
     return this.http.post<void>(url, value)
   }
 }
