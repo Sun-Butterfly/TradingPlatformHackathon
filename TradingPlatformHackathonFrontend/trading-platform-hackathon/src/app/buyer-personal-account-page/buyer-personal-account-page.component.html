@@ -45,4 +45,33 @@
     </tbody>
   </table>
 </div>
+<div class="acceptedResponses">
+  <h1>Заявки в работе</h1>
+  <table>
+    <tbody>
+    <tr>
+      <th>ID заявки</th>
+      <th>Наименование продукта/услуги</th>
+      <th>Стоимость, предложенная Вами</th>
+      <th>Количество продукта/услуги</th>
+      <th>ID закупщика</th>
+      <th>ID отклика</th>
+      <th>Стоимость, предложенная поставщиком</th>
+      <th>Комментарий поставщика</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let purchaseRequestInWork of purchaseRequestsInWorkByBuyerId, let i = index" (click)="setActivePurchaseResponseIndex(i)">
+      <td>{{purchaseRequestInWork.purchaseRequestId}}</td>
+      <td>{{purchaseRequestInWork.productName}}</td>
+      <td>{{purchaseRequestInWork.purchaseRequestCost}}</td>
+      <td>{{purchaseRequestInWork.productCount}}</td>
+      <td>{{purchaseRequestInWork.supplierId}}</td>
+      <td>{{purchaseRequestInWork.purchaseResponseId}}</td>
+      <td>{{purchaseRequestInWork.purchaseResponseCost}}</td>
+      <td>{{purchaseRequestInWork.comment}}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 <button class="home" (click)="goToHome()">Домой</button>

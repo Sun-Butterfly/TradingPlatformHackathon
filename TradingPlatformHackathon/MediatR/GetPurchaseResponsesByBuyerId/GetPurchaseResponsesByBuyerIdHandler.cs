@@ -18,7 +18,7 @@ public class GetPurchaseResponsesByBuyerIdHandler
     public async Task<Result<GetPurchaseResponsesByBuyerIdResponse>> Handle(GetPurchaseResponsesByBuyerIdRequest request, CancellationToken cancellationToken)
     {
         var purchaseResponses = await _db.PurchaseResponses
-            .Where(x => x.PurchaseRequest.BuyerId == request.BuyerId)
+            .Where(x => x.PurchaseRequest.BuyerId == request.BuyerId && x.PurchaseRequest.SupplierId==null)
             .Select(x => new GetPurchaseResponsesByBuyerIdDto(
                 x.Id,
                 x.PurchaseRequestId,

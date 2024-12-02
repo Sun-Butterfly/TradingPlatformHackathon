@@ -17,7 +17,7 @@ public class GetPurchaseRequestsByBuyerIdHandler : IRequestHandler<GetPurchaseRe
     public async Task<Result<GetPurchaseRequestByBuyerIdResponse>> Handle(GetPurchaseRequestByBuyerIdRequest request, CancellationToken cancellationToken)
     {
         var purchaseRequests = await _db.PurchaseRequests
-            .Where(x => x.BuyerId == request.BuyerId)
+            .Where(x => x.BuyerId == request.BuyerId && x.SupplierId==null)
             .Select(x => new GetPurchaseRequestByBuyerIdDto(
                 x.Id,
                 x.ProductName,

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {TokenService} from './token.service';
 
@@ -52,7 +52,16 @@ export interface CreatePurchaseRequestDto {
   cost: number
 }
 
-
+export interface PurchaseRequestInWorkDto{
+  purchaseRequestId: number,
+  productName: string,
+  purchaseRequestCost: number,
+  productCount: number,
+  supplierId: number
+  purchaseResponseId: number,
+  purchaseResponseCost: number,
+  comment: string
+}
 
 @Injectable({providedIn: "root"})
 export class HttpService {
@@ -113,5 +122,21 @@ export class HttpService {
         purchaseRequestId: purchaseRequestId
       }
     });
+  }
+
+  acceptPurchaseResponse(purchaseResponseId: number):Observable<void> {
+    const url: string = `${this.baseurl}/Buyer/AcceptPurchaseResponse`;
+    return this.http.post<void>(url, purchaseResponseId)
+
+  }
+
+  getPurchaseRequestsInWorkByBuyerId(id: number):Observable<PurchaseRequestInWorkDto[]> {
+    const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestsInWorkByBuyerId`;
+    return this.http.get<PurchaseRequestInWorkDto[]>(url,{
+      params: {
+        buyerId: id
+      }
+    })
+
   }
 }

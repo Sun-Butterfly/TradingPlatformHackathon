@@ -16,7 +16,8 @@ public class GetAllPurchaseRequestsHandler : IRequestHandler<GetAllPurchaseReque
 
     public async Task<Result<GetAllPurchaseRequestsResponse>> Handle(GetAllPurchaseRequestsRequest request, CancellationToken cancellationToken)
     {
-        var purchaseRequests = await _db.PurchaseRequests.Select(x =>
+        var purchaseRequests = await _db.PurchaseRequests.Where(x=>x.SupplierId==null)
+            .Select(x =>
             new GetPurchaseRequestDto(
                 x.Id,
                 x.ProductName,

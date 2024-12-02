@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf} from '@angular/common';
-import {HttpService, PurchaseRequest, PurchaseResponse} from '../../http.service';
+import {HttpService, PurchaseRequest, PurchaseRequestInWorkDto, PurchaseResponse} from '../../http.service';
 import {Router} from '@angular/router';
 import {TokenService} from '../../token.service';
 
@@ -18,6 +18,7 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   purchaseRequestsByBuyerId: PurchaseRequest[] = [];
   activePurchaseResponseIndex: number = -1;
   purchaseResponsesByBuyerId: PurchaseResponse[] = [];
+  purchaseRequestsInWorkByBuyerId: PurchaseRequestInWorkDto[] = [];
 
   constructor(private http: HttpService, private router: Router, private tokenService: TokenService) {
   }
@@ -26,6 +27,7 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
     let id = this.tokenService.getId();
     this.getPurchaseRequestsByBuyerId(id)
     this.getPurchaseResponsesByBuyerId(id)
+    this.getPurchaseRequestsInWorkByBuyerId(id)
   }
 
   setActivePurchaseRequestIndex(i: number) {
@@ -43,9 +45,10 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   goToDeletePurchaseRequest(i: number) {
     let purchaseRequestId = this.purchaseRequestsByBuyerId[i].id;
     let buyerId = this.tokenService.getId();
-    this.http.deletePurchaseRequest(purchaseRequestId).subscribe(() =>{
-      this.getPurchaseRequestsByBuyerId(buyerId);
-      this.getPurchaseResponsesByBuyerId(buyerId)}
+    this.http.deletePurchaseRequest(purchaseRequestId).subscribe(() => {
+        this.getPurchaseRequestsByBuyerId(buyerId);
+        this.getPurchaseResponsesByBuyerId(buyerId)
+      }
     )
   }
 
@@ -58,7 +61,13 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   }
 
   goToAcceptPurchaseResponse(i: number) {
-
+    let purchaseResponseId = this.purchaseResponsesByBuyerId[i].id;
+    let buyerId = this.tokenService.getId();
+    this.http.acceptPurchaseResponse(purchaseResponseId).subscribe(()=>{
+      this.getPurchaseRequestsByBuyerId(buyerId);
+      this.getPurchaseResponsesByBuyerId(buyerId);
+      this.getPurchaseRequestsInWorkByBuyerId(buyerId);
+    })
   }
 
   goToHome() {
@@ -73,5 +82,10 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   getPurchaseResponsesByBuyerId(id: number) {
     this.http.getPurchaseResponsesByBuyerId(id).subscribe(purchaseResponsesByBuyerId =>
       this.purchaseResponsesByBuyerId = purchaseResponsesByBuyerId)
+  }
+
+  getPurchaseRequestsInWorkByBuyerId(id: number) {
+    this.http.getPurchaseRequestsInWorkByBuyerId(id).subscribe(purchaseRequestsInWorkByBuyerId =>
+      this.purchaseRequestsInWorkByBuyerId = purchaseRequestsInWorkByBuyerId)
   }
 }
