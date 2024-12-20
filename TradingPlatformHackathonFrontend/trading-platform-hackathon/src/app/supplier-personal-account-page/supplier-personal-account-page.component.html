@@ -1,1 +1,24 @@
-<p>supplier-personal-account-page works!</p>
+<div class="myResponses">
+  <h1>Мои отклики</h1>
+  <table>
+    <tbody>
+    <tr>
+      <th>ID отклика</th>
+      <th>ID заявки</th>
+      <th>Ваша стоимость</th>
+      <th>Комментарий</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let purchaseResponse of purchaseResponsesBySupplierId, let i = index" (click)="setActivePurchaseResponseIndex(i)">
+      <td>{{purchaseResponse.id}}</td>
+      <td>{{purchaseResponse.purchaseRequestId}}</td>
+      <td>{{purchaseResponse.cost}}</td>
+      <td>{{purchaseResponse.comment}}</td>
+      <td>
+        <button class="buttonRedact" (click)="goToRedactPurchaseResponse(i)">Редактировать</button>
+        <button class="buttonDelete" (click)="goToDeletePurchaseResponse(i)">Удалить</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

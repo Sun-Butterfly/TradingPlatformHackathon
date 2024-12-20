@@ -52,7 +52,7 @@ export interface CreatePurchaseRequestDto {
   cost: number
 }
 
-export interface PurchaseRequestInWorkDto{
+export interface PurchaseRequestInWorkDto {
   purchaseRequestId: number,
   productName: string,
   purchaseRequestCost: number,
@@ -103,38 +103,48 @@ export class HttpService {
 
   getPurchaseResponsesByBuyerId(id: number): Observable<PurchaseResponse[]> {
     const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesByBuyerId`
-    return this.http.get<PurchaseResponse[]>(url,{
+    return this.http.get<PurchaseResponse[]>(url, {
       params: {
         buyerId: id
       }
     })
   }
 
-  createPurchaseRequest(value: CreatePurchaseRequestDto):Observable<void> {
+  createPurchaseRequest(value: CreatePurchaseRequestDto): Observable<void> {
     const url: string = `${this.baseurl}/PurchaseRequest/CreatePurchaseRequest`
     return this.http.post<void>(url, value)
   }
 
-  deletePurchaseRequest(purchaseRequestId: number):Observable<void> {
+  deletePurchaseRequest(purchaseRequestId: number): Observable<void> {
     const url: string = `${this.baseurl}/PurchaseRequest/DeletePurchaseRequest`;
-    return this.http.delete<void>(url,{
+    return this.http.delete<void>(url, {
       params: {
         purchaseRequestId: purchaseRequestId
       }
     });
   }
 
-  acceptPurchaseResponse(purchaseResponseId: number):Observable<void> {
+  acceptPurchaseResponse(purchaseResponseId: number): Observable<void> {
     const url: string = `${this.baseurl}/Buyer/AcceptPurchaseResponse`;
     return this.http.post<void>(url, purchaseResponseId)
 
   }
 
-  getPurchaseRequestsInWorkByBuyerId(id: number):Observable<PurchaseRequestInWorkDto[]> {
+  getPurchaseRequestsInWorkByBuyerId(id: number): Observable<PurchaseRequestInWorkDto[]> {
     const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestsInWorkByBuyerId`;
-    return this.http.get<PurchaseRequestInWorkDto[]>(url,{
+    return this.http.get<PurchaseRequestInWorkDto[]>(url, {
       params: {
         buyerId: id
+      }
+    })
+
+  }
+
+  getPurchaseResponsesBySupplierId(id: number): Observable<PurchaseResponse[]> {
+    const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesBySupplierId`;
+    return this.http.get<PurchaseResponse[]>(url,{
+      params:{
+        supplierId: id
       }
     })
 
