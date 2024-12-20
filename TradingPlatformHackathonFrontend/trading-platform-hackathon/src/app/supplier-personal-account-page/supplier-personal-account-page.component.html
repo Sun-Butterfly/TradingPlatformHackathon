@@ -22,3 +22,33 @@
     </tbody>
   </table>
 </div>
+<div class="acceptedResponses">
+  <h1>Отклики в работе</h1>
+  <table>
+    <tbody>
+    <tr>
+      <th>ID отклика</th>
+      <th>Стоимость, предложенная Вами</th>
+      <th>Комментарий </th>
+      <th>ID заявки</th>
+      <th>Наименование продукта/услуги</th>
+      <th>Стоимость, предложенная закупщиком</th>
+      <th>Количество продукта/услуги</th>
+      <th>ID закупщика</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let purchaseResponseInWork of purchaseResponsesInWorkBySupplierId, let i = index" (click)="setActivePurchaseResponseIndex(i)">
+      <td>{{purchaseResponseInWork.purchaseResponseId}}</td>
+      <td>{{purchaseResponseInWork.purchaseResponseCost}}</td>
+      <td>{{purchaseResponseInWork.comment}}</td>
+      <td>{{purchaseResponseInWork.purchaseRequestId}}</td>
+      <td>{{purchaseResponseInWork.productName}}</td>
+      <td>{{purchaseResponseInWork.purchaseRequestCost}}</td>
+      <td>{{purchaseResponseInWork.productCount}}</td>
+      <td>{{purchaseResponseInWork.buyerId}}</td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<button class="home" (click)="goToHome()">Домой</button>

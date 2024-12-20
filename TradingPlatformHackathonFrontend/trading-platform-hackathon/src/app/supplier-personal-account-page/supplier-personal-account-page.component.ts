@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NgForOf} from "@angular/common";
-import {HttpService, PurchaseResponse} from '../../http.service';
+import {HttpService, PurchaseResponse, PurchaseResponseInWorkDto} from '../../http.service';
 import {TokenService} from '../../token.service';
 import {Router} from '@angular/router';
 
@@ -16,6 +16,7 @@ import {Router} from '@angular/router';
 export class SupplierPersonalAccountPageComponent implements OnInit {
   purchaseResponsesBySupplierId: PurchaseResponse[] = [];
   private activePurchaseResponseIndex: number = -1;
+  purchaseResponsesInWorkBySupplierId: PurchaseResponseInWorkDto[] = [];
 
   constructor(private http: HttpService, private tokenService: TokenService, private router: Router) {
   }
@@ -23,6 +24,7 @@ export class SupplierPersonalAccountPageComponent implements OnInit {
   ngOnInit(): void {
     let id = this.tokenService.getId();
     this.getPurchaseResponsesBySupplierId(id);
+    this.getPurchaseResponsesInWorkBySupplierId(id);
   }
 
   setActivePurchaseResponseIndex(i: number) {
@@ -39,11 +41,20 @@ export class SupplierPersonalAccountPageComponent implements OnInit {
       this.purchaseResponsesBySupplierId = purchaseResponsesBySupplierId)
   }
 
+  getPurchaseResponsesInWorkBySupplierId(id: number) {
+    this.http.getPurchaseResponsesInWorkBySupplierId(id).subscribe(purchaseResponsesInWork =>
+      this.purchaseResponsesInWorkBySupplierId = purchaseResponsesInWork)
+  }
+
   goToRedactPurchaseResponse(i: number) {
 
   }
 
   goToDeletePurchaseResponse(i: number) {
 
+  }
+
+  goToHome() {
+    this.router.navigate(['home'])
   }
 }

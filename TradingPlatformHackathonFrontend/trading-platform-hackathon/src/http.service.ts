@@ -63,6 +63,17 @@ export interface PurchaseRequestInWorkDto {
   comment: string
 }
 
+export interface PurchaseResponseInWorkDto {
+  purchaseResponseId: number,
+  purchaseResponseCost: number,
+  comment: string
+  purchaseRequestId: number,
+  productName: string,
+  purchaseRequestCost: number,
+  productCount: number,
+  buyerId: number
+}
+
 @Injectable({providedIn: "root"})
 export class HttpService {
 
@@ -148,5 +159,14 @@ export class HttpService {
       }
     })
 
+  }
+
+  getPurchaseResponsesInWorkBySupplierId(id: number):Observable<PurchaseResponseInWorkDto[]> {
+    const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesInWorkBySupplierId`;
+    return this.http.get<PurchaseResponseInWorkDto[]>(url,{
+      params:{
+        supplierId: id
+      }
+    })
   }
 }

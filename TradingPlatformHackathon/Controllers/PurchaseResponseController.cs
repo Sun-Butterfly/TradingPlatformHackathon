@@ -7,6 +7,7 @@ using TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
 using TradingPlatformHackathon.MediatR.DeletePurchaseResponse;
 using TradingPlatformHackathon.MediatR.GetPurchaseResponsesByBuyerId;
 using TradingPlatformHackathon.MediatR.GetPurchaseResponsesBySupplierId;
+using TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierId;
 
 namespace TradingPlatformHackathon.Controllers;
 
@@ -84,5 +85,20 @@ public class PurchaseResponseController : Controller
         }
 
         return Ok(result.Value.PurchaseResponses);
+    }
+
+    [HttpGet]
+    [Authorize(Roles = "admin, supplier")]
+    public async Task<IActionResult> GetPurchaseResponsesInWorkBySupplierId(long supplierId)
+    {
+        var request = new GetPurchaseResponsesInWorkBySupplierIdRequest(supplierId);
+        var result = await _mediator.Send(request);
+        
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+
+        return Ok(result.Value.PurchaseResponsesInWork);
     }
 }

@@ -1,0 +1,5 @@
+using TradingPlatformHackathon.DTOs;
+
+namespace TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierId;
+
+public record GetPurchaseResponsesInWorkBySupplierIdResponse(List<GetPurchaseResponsesInWorkBySupplierIdDto> PurchaseResponsesInWork);

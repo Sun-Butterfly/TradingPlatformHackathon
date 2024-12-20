@@ -1,0 +1,6 @@
+using FluentResults;
+using MediatR;
+
+namespace TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierId;
+
+public record GetPurchaseResponsesInWorkBySupplierIdRequest(long SupplierId) : IRequest<Result<GetPurchaseResponsesInWorkBySupplierIdResponse>>;
