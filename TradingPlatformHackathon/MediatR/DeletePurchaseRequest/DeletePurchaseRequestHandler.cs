@@ -1,34 +1,33 @@
 using FluentResults;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using TradingPlatformHackathon.Services;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.DeletePurchaseRequest;
 
 public class
     DeletePurchaseRequestHandler : IRequestHandler<DeletePurchaseRequestRequest, Result<DeletePurchaseRequestResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly IPurchaseRequestRepository _purchaseRequestRepository;
+    private readonly IPurchaseResponseRepository _purchaseResponseRepository;
 
-    public DeletePurchaseRequestHandler(DataBaseContext db)
+    public DeletePurchaseRequestHandler(IPurchaseRequestRepository purchaseRequestRepository, IPurchaseResponseRepository purchaseResponseRepository)
     {
-        _db = db;
+        _purchaseRequestRepository = purchaseRequestRepository;
+        _purchaseResponseRepository = purchaseResponseRepository;
     }
 
     public async Task<Result<DeletePurchaseRequestResponse>> Handle(DeletePurchaseRequestRequest request,
         CancellationToken cancellationToken)
     {
-        var isPurchaseRequestExists = await _db.PurchaseRequests.AnyAsync(x => x.Id == request.PurchaseRequestId,
-            cancellationToken);
+        var isPurchaseRequestExists =
+            await _purchaseRequestRepository.ExistsById(request.PurchaseRequestId, cancellationToken);
         if (!isPurchaseRequestExists)
         {
             return Result.Fail("Запрос на закупку не найден!");
         }
 
-        await _db.PurchaseRequests.Where(x => x.Id == request.PurchaseRequestId)
-            .ExecuteDeleteAsync(cancellationToken);
-        await _db.PurchaseResponses.Where(x => x.PurchaseRequestId == request.PurchaseRequestId)
-            .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+        await _purchaseRequestRepository.DeleteById(request.PurchaseRequestId, cancellationToken);
+        await _purchaseResponseRepository.DeleteByPurchaseRequestId(request.PurchaseRequestId, cancellationToken);
         return Result.Ok(new DeletePurchaseRequestResponse());
     }
 }

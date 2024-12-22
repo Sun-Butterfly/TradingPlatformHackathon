@@ -7,6 +7,7 @@ using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using TradingPlatformHackathon;
 using TradingPlatformHackathon.Interfaces;
+using TradingPlatformHackathon.Repositories;
 using TradingPlatformHackathon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,6 +76,8 @@ builder.Services.AddAuthentication(opt =>
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<IService,Service>();
+builder.Services.AddScoped<IPurchaseRequestRepository, PurchaseRequestRepository>();
+builder.Services.AddScoped<IPurchaseResponseRepository, PurchaseResponseRepository>();
 
 var app = builder.Build();
 
