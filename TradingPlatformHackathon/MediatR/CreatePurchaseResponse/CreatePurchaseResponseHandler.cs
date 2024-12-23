@@ -2,24 +2,26 @@ using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TradingPlatformHackathon.Models;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
 
 public class CreatePurchaseResponseHandler : IRequestHandler<CreatePurchaseResponseRequest,
     Result<CreatePurchaseResponseResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly UserRepository _userRepository;
+    private readonly PurchaseResponseRepository _purchaseResponseRepository;
 
-    public CreatePurchaseResponseHandler(DataBaseContext db)
+    public CreatePurchaseResponseHandler(UserRepository userRepository, PurchaseResponseRepository purchaseResponseRepository)
     {
-        _db = db;
+        _userRepository = userRepository;
+        _purchaseResponseRepository = purchaseResponseRepository;
     }
 
     public async Task<Result<CreatePurchaseResponseResponse>> Handle(CreatePurchaseResponseRequest request,
         CancellationToken cancellationToken)
     {
-        var supplier =
-            await _db.Users.FirstOrDefaultAsync(x => x.Id == request.SupplierId, cancellationToken: cancellationToken);
+        var supplier = await _userRepository.GetById(request.SupplierId, cancellationToken);
         if (supplier == null)
         {
             return Result.Fail("Пользователь не найден!");
@@ -32,9 +34,9 @@ public class CreatePurchaseResponseHandler : IRequestHandler<CreatePurchaseRespo
             Comment = request.Comment,
             SupplierId = supplier.Id
         };
-        _db.Add(purchaseResponse);
-        await _db.SaveChangesAsync(cancellationToken);
-        
+        _purchaseResponseRepository.Add(purchaseResponse);
+        await _purchaseResponseRepository.SaveChanges(cancellationToken);
+
         return Result.Ok(new CreatePurchaseResponseResponse());
     }
 }

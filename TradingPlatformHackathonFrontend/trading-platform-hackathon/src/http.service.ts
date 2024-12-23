@@ -94,12 +94,12 @@ export class HttpService {
   }
 
   getAllPurchaseRequests(): Observable<PurchaseRequest[]> {
-    const url: string = `${this.baseurl}/PurchaseRequest/GetAllPurchaseRequests`
+    const url: string = `${this.baseurl}/PurchaseRequest/GetAllNotInWorkPurchaseRequests`
     return this.http.get<PurchaseRequest[]>(url)
   }
 
   getPurchaseRequestsByBuyerId(id: number): Observable<PurchaseRequest[]> {
-    const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestByBuyerId`
+    const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestNotInWorkByBuyerId`
     return this.http.get<PurchaseRequest[]>(url, {
       params: {
         buyerId: id
@@ -113,7 +113,7 @@ export class HttpService {
   }
 
   getPurchaseResponsesByBuyerId(id: number): Observable<PurchaseResponse[]> {
-    const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesByBuyerId`
+    const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesNotInWorkByBuyerId`
     return this.http.get<PurchaseResponse[]>(url, {
       params: {
         buyerId: id

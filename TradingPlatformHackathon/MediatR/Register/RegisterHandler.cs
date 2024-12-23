@@ -2,22 +2,22 @@ using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TradingPlatformHackathon.Models;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.Register;
 
 public class RegisterHandler : IRequestHandler<RegisterRequest, Result<RegisterResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly UserRepository _userRepository;
 
-    public RegisterHandler(DataBaseContext db)
+    public RegisterHandler(UserRepository userRepository)
     {
-        _db = db;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<RegisterResponse>> Handle(RegisterRequest request, CancellationToken cancellationToken)
     {
-        var user = await _db.Users.FirstOrDefaultAsync(x => x.Email == request.Email,
-            cancellationToken: cancellationToken);
+        var user = await _userRepository.GetByEmail(request.Email, cancellationToken);
         if (user != null)
         {
             return Result.Fail("Пользователь с таким email уже существует!");
@@ -32,8 +32,8 @@ public class RegisterHandler : IRequestHandler<RegisterRequest, Result<RegisterR
             PhoneNumber = request.PhoneNumber,
             RoleId = request.RoleId
         };
-        _db.Add(user);
-        await _db.SaveChangesAsync(cancellationToken);
+        _userRepository.Add(user);
+        await _userRepository.SaveChanges(cancellationToken);
         
         return Result.Ok(new RegisterResponse());
     }

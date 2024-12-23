@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
 using TradingPlatformHackathon.MediatR.DeletePurchaseResponse;
-using TradingPlatformHackathon.MediatR.GetPurchaseResponsesByBuyerId;
+using TradingPlatformHackathon.MediatR.GetPurchaseResponsesNotInWorkByBuyerId;
 using TradingPlatformHackathon.MediatR.GetPurchaseResponsesBySupplierId;
 using TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierId;
 
@@ -24,9 +24,9 @@ public class PurchaseResponseController : Controller
 
     [HttpGet]
     [Authorize(Roles = "admin, buyer")]
-    public async Task<IActionResult> GetPurchaseResponsesByBuyerId(long buyerId)
+    public async Task<IActionResult> GetPurchaseResponsesNotInWorkByBuyerId(long buyerId)
     {
-        var request = new GetPurchaseResponsesByBuyerIdRequest(buyerId);
+        var request = new GetPurchaseResponsesNotInWorkByBuyerIdRequest(buyerId);
         var result = await _mediator.Send(request);
         if (result.IsFailed)
         {

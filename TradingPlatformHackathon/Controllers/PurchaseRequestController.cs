@@ -5,8 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.CreatePurchaseRequest;
 using TradingPlatformHackathon.MediatR.DeletePurchaseRequest;
-using TradingPlatformHackathon.MediatR.GetAllPurchaseRequests;
-using TradingPlatformHackathon.MediatR.GetPurchaseRequestsByBuyerId;
+using TradingPlatformHackathon.MediatR.GetAllNotInWorkPurchaseRequests;
+using TradingPlatformHackathon.MediatR.GetPurchaseRequestsNotInWorkByBuyerId;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsInWorkByBuyerId;
 
 namespace TradingPlatformHackathon.Controllers;
@@ -24,9 +24,9 @@ public class PurchaseRequestController : Controller
 
     [HttpGet]
     [AllowAnonymous]
-    public async Task<IActionResult> GetAllPurchaseRequests()
+    public async Task<IActionResult> GetAllNotInWorkPurchaseRequests()
     {
-        var request = new GetAllPurchaseRequestsRequest();
+        var request = new GetAllNotInWorkPurchaseRequestsRequest();
         var result = await _mediator.Send(request);
         
         if (result.IsFailed)
@@ -39,9 +39,9 @@ public class PurchaseRequestController : Controller
 
     [HttpGet]
     [Authorize(Roles = "admin, buyer")]
-    public async Task<IActionResult> GetPurchaseRequestByBuyerId(long buyerId)
+    public async Task<IActionResult> GetPurchaseRequestNotInWorkByBuyerId(long buyerId)
     {
-        var request = new GetPurchaseRequestByBuyerIdRequest(buyerId);
+        var request = new GetPurchaseRequestNotInWorkByBuyerIdRequest(buyerId);
         var result = await _mediator.Send(request);
         if (result.IsFailed)
         {
@@ -90,7 +90,7 @@ public class PurchaseRequestController : Controller
     [Authorize(Roles = "admin, buyer")]
     public async Task<IActionResult> GetPurchaseRequestsInWorkByBuyerId(long buyerId)
     {
-        var request = new GetPurchaseRequestsInWorkBuBuyerIdRequest(buyerId);
+        var request = new GetPurchaseRequestsInWorkByBuyerIdRequest(buyerId);
         var result = await _mediator.Send(request);
         
         if (result.IsFailed)

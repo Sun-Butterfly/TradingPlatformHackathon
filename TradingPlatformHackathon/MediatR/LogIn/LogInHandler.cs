@@ -7,23 +7,22 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.LogIn;
 
 public class LogInHandler : IRequestHandler<LogInRequest, Result<LogInResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly UserRepository _userRepository;
 
-    public LogInHandler(DataBaseContext db)
+    public LogInHandler(UserRepository userRepository)
     {
-        _db = db;
+        _userRepository = userRepository;
     }
 
     public async Task<Result<LogInResponse>> Handle(LogInRequest request, CancellationToken cancellationToken)
     {
-        var user = await _db.Users.Include(user => user.Role).FirstOrDefaultAsync(x => x.Email == request.Email &&
-                                                            x.Password == request.Password,
-            cancellationToken: cancellationToken);
+        var user = await _userRepository.GetByEmailAndPassword(request.Email, request.Password, cancellationToken);
         if (user is null)
         {
             return Result.Fail("Неверный логин или пароль");

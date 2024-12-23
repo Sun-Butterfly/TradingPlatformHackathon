@@ -2,6 +2,7 @@ using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TradingPlatformHackathon.Interfaces;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.AcceptPurchaseResponse;
 
@@ -9,25 +10,24 @@ public class
     AcceptPurchaseResponseHandler : IRequestHandler<AcceptPurchaseResponseRequest,
         Result<AcceptPurchaseResponseResponse>>
 {
-    private readonly DataBaseContext _db;
     private readonly IService _service;
+    private readonly PurchaseResponseRepository _purchaseResponseRepository;
 
-    public AcceptPurchaseResponseHandler(DataBaseContext db, IService service)
+    public AcceptPurchaseResponseHandler(IService service, PurchaseResponseRepository purchaseResponseRepository)
     {
-        _db = db;
         _service = service;
+        _purchaseResponseRepository = purchaseResponseRepository;
     }
 
     public async Task<Result<AcceptPurchaseResponseResponse>> Handle(AcceptPurchaseResponseRequest request,
         CancellationToken cancellationToken)
     {
-        var purchaseResponse = await _db.PurchaseResponses.FirstOrDefaultAsync(x => x.Id == request.PurchaseResponseId,
-            cancellationToken: cancellationToken);
+        var purchaseResponse = await _purchaseResponseRepository.GetById(request.PurchaseResponseId, cancellationToken);
         if (purchaseResponse == null)
         {
             return Result.Fail("Отклик не найден");
         }
-        await _service.SetSupplierIdToPurchaseRequest(purchaseResponse.PurchaseRequestId, purchaseResponse.SupplierId);
+        await _service.SetSupplierIdToPurchaseRequest(purchaseResponse.PurchaseRequestId, purchaseResponse.SupplierId, cancellationToken);
         return Result.Ok(new AcceptPurchaseResponseResponse());
     }
 }

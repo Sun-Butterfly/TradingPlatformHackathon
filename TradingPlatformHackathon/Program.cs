@@ -78,6 +78,7 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<IService,Service>();
 builder.Services.AddScoped<IPurchaseRequestRepository, PurchaseRequestRepository>();
 builder.Services.AddScoped<IPurchaseResponseRepository, PurchaseResponseRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

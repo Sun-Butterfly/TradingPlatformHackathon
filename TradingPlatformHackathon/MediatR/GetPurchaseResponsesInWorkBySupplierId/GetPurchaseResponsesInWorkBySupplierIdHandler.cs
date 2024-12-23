@@ -2,33 +2,25 @@ using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TradingPlatformHackathon.DTOs;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierId;
 
 public class GetPurchaseResponsesInWorkBySupplierIdHandler : IRequestHandler<
     GetPurchaseResponsesInWorkBySupplierIdRequest, Result<GetPurchaseResponsesInWorkBySupplierIdResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly PurchaseResponseRepository _purchaseResponseRepository;
 
-    public GetPurchaseResponsesInWorkBySupplierIdHandler(DataBaseContext db)
+    public GetPurchaseResponsesInWorkBySupplierIdHandler(PurchaseResponseRepository purchaseResponseRepository)
     {
-        _db = db;
+        _purchaseResponseRepository = purchaseResponseRepository;
     }
 
     public async Task<Result<GetPurchaseResponsesInWorkBySupplierIdResponse>> Handle(
         GetPurchaseResponsesInWorkBySupplierIdRequest request, CancellationToken cancellationToken)
     {
-        var purchaseResponsesInWork = await _db.PurchaseResponses
-            .Where(x => x.SupplierId == request.SupplierId && x.PurchaseRequest.SupplierId != null)
-            .Select(x => new GetPurchaseResponsesInWorkBySupplierIdDto(
-                x.Id,
-                x.Cost,
-                x.Comment,
-                x.PurchaseRequestId,
-                x.PurchaseRequest.ProductName,
-                x.PurchaseRequest.Cost,
-                x.PurchaseRequest.ProductCount,
-                x.PurchaseRequest.BuyerId)).ToListAsync(cancellationToken: cancellationToken);
+        var purchaseResponsesInWork =
+            await _purchaseResponseRepository.GetInWorkBySupplierId(request.SupplierId, cancellationToken);
         return Result.Ok(new GetPurchaseResponsesInWorkBySupplierIdResponse(purchaseResponsesInWork));
     }
 }

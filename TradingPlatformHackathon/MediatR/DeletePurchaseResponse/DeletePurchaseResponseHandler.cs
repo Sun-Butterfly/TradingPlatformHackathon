@@ -1,6 +1,7 @@
 using FluentResults;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.DeletePurchaseResponse;
 
@@ -8,25 +9,24 @@ public class
     DeletePurchaseResponseHandler : IRequestHandler<DeletePurchaseResponseRequest,
         Result<DeletePurchaseResponseResponse>>
 {
-    private readonly DataBaseContext _db;
+    private readonly PurchaseResponseRepository _purchaseResponseRepository;
 
-    public DeletePurchaseResponseHandler(DataBaseContext db)
+    public DeletePurchaseResponseHandler(PurchaseResponseRepository purchaseResponseRepository)
     {
-        _db = db;
+        _purchaseResponseRepository = purchaseResponseRepository;
     }
 
     public async Task<Result<DeletePurchaseResponseResponse>> Handle(DeletePurchaseResponseRequest request,
         CancellationToken cancellationToken)
     {
-        var isPurchaseResponseExists = await _db.PurchaseResponses.AnyAsync(x => x.Id == request.PurchaseResponseId,
-            cancellationToken: cancellationToken);
+        var isPurchaseResponseExists =
+            await _purchaseResponseRepository.ExistsById(request.PurchaseResponseId, cancellationToken);
         if (!isPurchaseResponseExists)
         {
             return Result.Fail("Отклик не найден");
         }
 
-        await _db.PurchaseResponses.Where(x => x.Id == request.PurchaseResponseId)
-            .ExecuteDeleteAsync(cancellationToken: cancellationToken);
+        await _purchaseResponseRepository.DeleteById(request.PurchaseResponseId, cancellationToken);
         return Result.Ok(new DeletePurchaseResponseResponse());
     }
 }
