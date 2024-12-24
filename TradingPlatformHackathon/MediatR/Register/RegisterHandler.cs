@@ -8,9 +8,9 @@ namespace TradingPlatformHackathon.MediatR.Register;
 
 public class RegisterHandler : IRequestHandler<RegisterRequest, Result<RegisterResponse>>
 {
-    private readonly UserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public RegisterHandler(UserRepository userRepository)
+    public RegisterHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }

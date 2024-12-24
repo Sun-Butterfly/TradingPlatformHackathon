@@ -9,10 +9,10 @@ namespace TradingPlatformHackathon.MediatR.CreatePurchaseResponse;
 public class CreatePurchaseResponseHandler : IRequestHandler<CreatePurchaseResponseRequest,
     Result<CreatePurchaseResponseResponse>>
 {
-    private readonly UserRepository _userRepository;
-    private readonly PurchaseResponseRepository _purchaseResponseRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IPurchaseResponseRepository _purchaseResponseRepository;
 
-    public CreatePurchaseResponseHandler(UserRepository userRepository, PurchaseResponseRepository purchaseResponseRepository)
+    public CreatePurchaseResponseHandler(IUserRepository userRepository, IPurchaseResponseRepository purchaseResponseRepository)
     {
         _userRepository = userRepository;
         _purchaseResponseRepository = purchaseResponseRepository;

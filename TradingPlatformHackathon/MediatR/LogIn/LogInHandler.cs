@@ -13,9 +13,9 @@ namespace TradingPlatformHackathon.MediatR.LogIn;
 
 public class LogInHandler : IRequestHandler<LogInRequest, Result<LogInResponse>>
 {
-    private readonly UserRepository _userRepository;
+    private readonly IUserRepository _userRepository;
 
-    public LogInHandler(UserRepository userRepository)
+    public LogInHandler(IUserRepository userRepository)
     {
         _userRepository = userRepository;
     }

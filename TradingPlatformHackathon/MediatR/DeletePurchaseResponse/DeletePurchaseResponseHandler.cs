@@ -9,9 +9,9 @@ public class
     DeletePurchaseResponseHandler : IRequestHandler<DeletePurchaseResponseRequest,
         Result<DeletePurchaseResponseResponse>>
 {
-    private readonly PurchaseResponseRepository _purchaseResponseRepository;
+    private readonly IPurchaseResponseRepository _purchaseResponseRepository;
 
-    public DeletePurchaseResponseHandler(PurchaseResponseRepository purchaseResponseRepository)
+    public DeletePurchaseResponseHandler(IPurchaseResponseRepository purchaseResponseRepository)
     {
         _purchaseResponseRepository = purchaseResponseRepository;
     }

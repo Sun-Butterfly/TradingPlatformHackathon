@@ -11,9 +11,9 @@ public class
         Result<AcceptPurchaseResponseResponse>>
 {
     private readonly IService _service;
-    private readonly PurchaseResponseRepository _purchaseResponseRepository;
+    private readonly IPurchaseResponseRepository _purchaseResponseRepository;
 
-    public AcceptPurchaseResponseHandler(IService service, PurchaseResponseRepository purchaseResponseRepository)
+    public AcceptPurchaseResponseHandler(IService service, IPurchaseResponseRepository purchaseResponseRepository)
     {
         _service = service;
         _purchaseResponseRepository = purchaseResponseRepository;

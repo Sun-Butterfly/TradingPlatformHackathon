@@ -8,10 +8,10 @@ namespace TradingPlatformHackathon.MediatR.GetAllNotInWorkPurchaseRequests;
 
 public class GetAllNotInWorkPurchaseRequestsHandler : IRequestHandler<GetAllNotInWorkPurchaseRequestsRequest, Result<GetAllNotInWorkPurchaseRequestsResponse>>
 {
-    private readonly PurchaseRequestRepository _purchaseRequestRepository
+    private readonly IPurchaseRequestRepository _purchaseRequestRepository
         ;
 
-    public GetAllNotInWorkPurchaseRequestsHandler(PurchaseRequestRepository purchaseRequestRepository)
+    public GetAllNotInWorkPurchaseRequestsHandler(IPurchaseRequestRepository purchaseRequestRepository)
     {
         _purchaseRequestRepository = purchaseRequestRepository;
     }

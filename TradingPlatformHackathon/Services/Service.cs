@@ -6,9 +6,9 @@ namespace TradingPlatformHackathon.Services;
 
 public class Service : IService
 {
-    private readonly PurchaseRequestRepository _purchaseRequestRepository;
+    private readonly IPurchaseRequestRepository _purchaseRequestRepository;
 
-    public Service(PurchaseRequestRepository purchaseRequestRepository)
+    public Service(IPurchaseRequestRepository purchaseRequestRepository)
     {
         _purchaseRequestRepository = purchaseRequestRepository;
     }

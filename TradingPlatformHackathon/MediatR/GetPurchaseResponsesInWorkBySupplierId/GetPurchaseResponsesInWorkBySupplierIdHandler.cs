@@ -9,9 +9,9 @@ namespace TradingPlatformHackathon.MediatR.GetPurchaseResponsesInWorkBySupplierI
 public class GetPurchaseResponsesInWorkBySupplierIdHandler : IRequestHandler<
     GetPurchaseResponsesInWorkBySupplierIdRequest, Result<GetPurchaseResponsesInWorkBySupplierIdResponse>>
 {
-    private readonly PurchaseResponseRepository _purchaseResponseRepository;
+    private readonly IPurchaseResponseRepository _purchaseResponseRepository;
 
-    public GetPurchaseResponsesInWorkBySupplierIdHandler(PurchaseResponseRepository purchaseResponseRepository)
+    public GetPurchaseResponsesInWorkBySupplierIdHandler(IPurchaseResponseRepository purchaseResponseRepository)
     {
         _purchaseResponseRepository = purchaseResponseRepository;
     }

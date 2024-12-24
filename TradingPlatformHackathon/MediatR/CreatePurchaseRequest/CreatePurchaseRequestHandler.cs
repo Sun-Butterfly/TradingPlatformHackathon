@@ -8,10 +8,10 @@ namespace TradingPlatformHackathon.MediatR.CreatePurchaseRequest;
 
 public class CreatePurchaseRequestHandler : IRequestHandler<CreatePurchaseRequestRequest, Result<CreatePurchaseRequestResponse>>
 {
-    private readonly UserRepository _userRepository;
-    private readonly PurchaseRequestRepository _purchaseRequestRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IPurchaseRequestRepository _purchaseRequestRepository;
 
-    public CreatePurchaseRequestHandler(UserRepository userRepository, PurchaseRequestRepository purchaseRequestRepository)
+    public CreatePurchaseRequestHandler(IUserRepository userRepository, IPurchaseRequestRepository purchaseRequestRepository)
     {
         _userRepository = userRepository;
         _purchaseRequestRepository = purchaseRequestRepository;
