@@ -86,4 +86,14 @@ public class PurchaseRequestRepository : IPurchaseRequestRepository
     {
         _db.PurchaseRequests.Update(purchaseRequest);
     }
+
+    public async Task<GetPurchaseRequestByIdDto?> GetDtoById(long id, CancellationToken cancellationToken)
+    {
+        return await _db.PurchaseRequests
+            .Where(x => x.Id == id)
+            .Select(x => new GetPurchaseRequestByIdDto(
+                x.ProductName,
+                x.ProductCount,
+                x.Cost)).FirstOrDefaultAsync(cancellationToken);
+    }
 }

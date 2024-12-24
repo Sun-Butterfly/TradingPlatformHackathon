@@ -6,6 +6,7 @@ using TradingPlatformHackathon.DTOs;
 using TradingPlatformHackathon.MediatR.CreatePurchaseRequest;
 using TradingPlatformHackathon.MediatR.DeletePurchaseRequest;
 using TradingPlatformHackathon.MediatR.GetAllNotInWorkPurchaseRequests;
+using TradingPlatformHackathon.MediatR.GetPurchaseRequestById;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsNotInWorkByBuyerId;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsInWorkByBuyerId;
 
@@ -100,4 +101,20 @@ public class PurchaseRequestController : Controller
 
         return Ok(result.Value.PurchaseRequestsInWork);
     }
+
+    [HttpGet]
+    [Authorize(Roles = "admin, buyer")]
+    public async Task<IActionResult> GetPurchaseRequestById(long id)
+    {
+        var request = new GetPurchaseRequestByIdRequest(id);
+        var result = await _mediator.Send(request);
+        
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+
+        return Ok(result.Value.PurchaseRequest);
+    }
+    
 }

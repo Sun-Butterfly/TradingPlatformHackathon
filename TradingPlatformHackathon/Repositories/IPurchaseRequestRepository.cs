@@ -14,4 +14,5 @@ public interface IPurchaseRequestRepository
     Task<List<GetPurchaseRequestsInWorkByBuyerIdDto>> GetInWorkByBuyerId(long id, CancellationToken cancellationToken);
     Task<PurchaseRequest?> GetById(long id, CancellationToken cancellationToken);
     void Update(PurchaseRequest purchaseRequest);
+    Task<GetPurchaseRequestByIdDto?> GetDtoById(long id, CancellationToken cancellationToken);
 }
