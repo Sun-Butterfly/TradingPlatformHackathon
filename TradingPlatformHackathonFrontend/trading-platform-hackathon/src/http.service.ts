@@ -46,6 +46,18 @@ export interface CreatePurchaseResponseDto {
   comment: string
 }
 
+export interface GetPurchaseRequestByIdDto {
+  productName: string,
+  productCount: number,
+  cost: number
+}
+
+export interface RedactPurchaseRequestDto{
+  productName: string,
+  productCount: number,
+  cost: number
+}
+
 export interface CreatePurchaseRequestDto {
   productName: string,
   productCount: number,
@@ -153,20 +165,34 @@ export class HttpService {
 
   getPurchaseResponsesBySupplierId(id: number): Observable<PurchaseResponse[]> {
     const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesBySupplierId`;
-    return this.http.get<PurchaseResponse[]>(url,{
-      params:{
+    return this.http.get<PurchaseResponse[]>(url, {
+      params: {
         supplierId: id
       }
     })
 
   }
 
-  getPurchaseResponsesInWorkBySupplierId(id: number):Observable<PurchaseResponseInWorkDto[]> {
+  getPurchaseResponsesInWorkBySupplierId(id: number): Observable<PurchaseResponseInWorkDto[]> {
     const url: string = `${this.baseurl}/PurchaseResponse/GetPurchaseResponsesInWorkBySupplierId`;
-    return this.http.get<PurchaseResponseInWorkDto[]>(url,{
-      params:{
+    return this.http.get<PurchaseResponseInWorkDto[]>(url, {
+      params: {
         supplierId: id
       }
     })
+  }
+
+  getPurchaseRequestById(id: number): Observable<GetPurchaseRequestByIdDto> {
+    const url: string = `${this.baseurl}/PurchaseRequest/GetPurchaseRequestById`;
+    return this.http.get<GetPurchaseRequestByIdDto>(url, {
+      params: {
+        id: id
+      }
+    })
+  }
+
+  redactPurchaseRequestById(request: RedactPurchaseRequestDto): Observable<void> {
+    const url: string = `${this.baseurl}/PurchaseRequest/RedactPurchaseRequest`;
+    return this.http.post<void>(url, request)
   }
 }

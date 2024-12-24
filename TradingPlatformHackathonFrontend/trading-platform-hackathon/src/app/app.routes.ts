@@ -12,6 +12,9 @@ import {BuyerPersonalAccountPageComponent} from './buyer-personal-account-page/b
 import {
   SupplierPersonalAccountPageComponent
 } from './supplier-personal-account-page/supplier-personal-account-page.component';
+import {
+  RedactPurchaseRequestPageComponent
+} from './redact-purchase-request-page/redact-purchase-request-page.component';
 
 export const routes: Routes = [
   {
@@ -54,6 +57,10 @@ export const routes: Routes = [
   {
     path: 'account_s',
     component: SupplierPersonalAccountPageComponent
+  },
+  {
+    path: 'redact-purchase-request/:id',
+    component: RedactPurchaseRequestPageComponent
   },
   {
     path: '**',

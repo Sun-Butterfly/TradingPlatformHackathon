@@ -39,7 +39,7 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   }
 
   goToRedactPurchaseRequest(i: number) {
-
+    this.router.navigate(['redact-purchase-request', this.purchaseRequestsByBuyerId[i].id.toString()])
   }
 
   goToDeletePurchaseRequest(i: number) {
@@ -63,7 +63,7 @@ export class BuyerPersonalAccountPageComponent implements OnInit {
   goToAcceptPurchaseResponse(i: number) {
     let purchaseResponseId = this.purchaseResponsesByBuyerId[i].id;
     let buyerId = this.tokenService.getId();
-    this.http.acceptPurchaseResponse(purchaseResponseId).subscribe(()=>{
+    this.http.acceptPurchaseResponse(purchaseResponseId).subscribe(() => {
       this.getPurchaseRequestsByBuyerId(buyerId);
       this.getPurchaseResponsesByBuyerId(buyerId);
       this.getPurchaseRequestsInWorkByBuyerId(buyerId);

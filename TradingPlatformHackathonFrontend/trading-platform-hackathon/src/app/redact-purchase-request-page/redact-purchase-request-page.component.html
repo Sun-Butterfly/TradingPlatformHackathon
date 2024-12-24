@@ -1,0 +1,12 @@
+<div>Редактирование заявки №{{activePurchaseRequestId}}</div>
+
+<div class="inputFields" [formGroup]="redactPurchaseRequestFormGroup">
+  <label>Наименование продукции/услуги</label>
+  <p><input type="text" formControlName="productName"></p>
+  <label>Количество продукции/услуги</label>
+  <p><input type="text" formControlName="productCount"></p>
+  <label>Стоимость, которую вы готовы предложить за закупку</label>
+  <p><input type="text" formControlName="cost"></p>
+</div>
+<button class="create" (click)="redactPurchaseRequest()">Редактировать</button>
+<button class="cancel" (click)="goToCancelRedact()">Отмена</button>

@@ -9,6 +9,7 @@ using TradingPlatformHackathon.MediatR.GetAllNotInWorkPurchaseRequests;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestById;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsNotInWorkByBuyerId;
 using TradingPlatformHackathon.MediatR.GetPurchaseRequestsInWorkByBuyerId;
+using TradingPlatformHackathon.MediatR.RedactPurchaseRequest;
 
 namespace TradingPlatformHackathon.Controllers;
 
@@ -115,6 +116,24 @@ public class PurchaseRequestController : Controller
         }
 
         return Ok(result.Value.PurchaseRequest);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "admin, buyer")]
+    public async Task<IActionResult> RedactPurchaseRequest([FromBody] RedactPurchaseRequestDto purchaseRequestDto)
+    {
+        var request = new RedactPurchaseRequestRequest(
+            purchaseRequestDto.PurchaseRequestId,
+            purchaseRequestDto.ProductName,
+            purchaseRequestDto.ProductCount,
+            purchaseRequestDto.Cost);
+        var result = await _mediator.Send(request);
+        if (result.IsFailed)
+        {
+            return BadRequest(new ErrorModel(result.StringifyErrors()));
+        }
+
+        return Ok(result.Value);
     }
     
 }
