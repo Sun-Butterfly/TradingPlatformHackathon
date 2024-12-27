@@ -39,4 +39,9 @@ public class UserRepository : IUserRepository
     {
         await _db.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<Dictionary<long, User>> GetByIdMany(IEnumerable<long> distinctUserIds)
+    {
+        return await _db.Users.Where(x => distinctUserIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
+    }
 }

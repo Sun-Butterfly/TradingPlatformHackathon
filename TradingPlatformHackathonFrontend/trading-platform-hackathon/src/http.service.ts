@@ -86,6 +86,14 @@ export interface PurchaseResponseInWorkDto {
   buyerId: number
 }
 
+export interface ChatInfo{
+  companionId: number,
+  companionName: string,
+  latestMessage: string,
+  latestMessageTime: Date,
+  isLatestMessageRead: boolean
+}
+
 @Injectable({providedIn: "root"})
 export class HttpService {
 
@@ -194,5 +202,10 @@ export class HttpService {
   redactPurchaseRequestById(request: RedactPurchaseRequestDto): Observable<void> {
     const url: string = `${this.baseurl}/PurchaseRequest/RedactPurchaseRequest`;
     return this.http.post<void>(url, request)
+  }
+
+  getChatsInfoByUserId():Observable<ChatInfo[]> {
+    const url: string = `${this.baseurl}/Message/GetChatInfoByUserId`
+    return this.http.get<ChatInfo[]>(url)
   }
 }

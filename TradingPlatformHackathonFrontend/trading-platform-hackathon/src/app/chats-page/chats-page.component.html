@@ -1,0 +1,20 @@
+<div>
+  <table>
+    <tbody>
+    <tr>
+      <th>От кого</th>
+      <th>Сообщение</th>
+      <th></th>
+    </tr>
+    <tr *ngFor="let chat of chats, let i = index" (click)="setActiveChatIndex(i)">
+      <td>{{chat.companionId}} {{chat.companionName}}</td>
+      <td [class.gray]="!chat.isLatestMessageRead"
+          [class.white]="chat.isLatestMessageRead"
+      >{{chat.latestMessage}} {{chat.latestMessageTime}}</td>
+      <td>
+        <button class="goToChat" (click)="goToChat(i)">Перейти к чату</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>

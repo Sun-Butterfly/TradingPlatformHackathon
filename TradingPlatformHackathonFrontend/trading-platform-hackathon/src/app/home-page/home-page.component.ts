@@ -54,11 +54,15 @@ export class HomePageComponent implements OnInit {
     if (this.tokenService.getToken() === null) {
       return alert("Войдите в систему, чтобы продолжить")
     }
-    if (this.tokenService.getRole()==="buyer") {
+    if (this.tokenService.getRole() === "buyer") {
       this.router.navigate(['account_b'])
     }
-    if (this.tokenService.getRole()==="supplier") {
+    if (this.tokenService.getRole() === "supplier") {
       this.router.navigate(['account_s'])
     }
+  }
+
+  goToChats() {
+    this.router.navigate(['chats'])
   }
 }

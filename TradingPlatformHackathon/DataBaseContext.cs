@@ -55,6 +55,10 @@ public class DataBaseContext : DbContext
                     Name = "supplier"
                 }
             });
+        modelBuilder.Entity<Message>()
+            .Property(x => x.IsRead)
+            .HasDefaultValueSql("false");
+        
         modelBuilder.Entity<PurchaseRequest>()
             .HasOne(p => p.Buyer)
             .WithMany(b => b.PurchaseRequestsAsBuyer)

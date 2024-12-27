@@ -15,6 +15,8 @@ import {
 import {
   RedactPurchaseRequestPageComponent
 } from './redact-purchase-request-page/redact-purchase-request-page.component';
+import {ChatsPageComponent} from './chats-page/chats-page.component';
+import {DialogPageComponent} from './dialog-page/dialog-page.component';
 
 export const routes: Routes = [
   {
@@ -61,6 +63,14 @@ export const routes: Routes = [
   {
     path: 'redact-purchase-request/:id',
     component: RedactPurchaseRequestPageComponent
+  },
+  {
+    path: 'chats',
+    component: ChatsPageComponent
+  },
+  {
+    path: 'dialog',
+    component: DialogPageComponent
   },
   {
     path: '**',

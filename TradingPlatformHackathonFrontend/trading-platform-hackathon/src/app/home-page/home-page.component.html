@@ -7,8 +7,9 @@
 <div class="autorize" *ngIf="isAuthorize()">
   <button class="buyer" (click)="goToBuyer()">Закупщикам</button>
   <button class="supplier" (click)="goToSupplier()">Поставщикам</button>
-  <button class="login" (click)="goToPersonalAccount()">Личный кабинет</button>
-  <button class="login" (click)="goToLogout()">Выйти</button>
+  <button class="personalAccount" (click)="goToPersonalAccount()">Личный кабинет</button>
+  <button class="chats" (click)="goToChats()">Личные сообщения</button>
+  <button class="logout" (click)="goToLogout()">Выйти</button>
 </div>
 
 

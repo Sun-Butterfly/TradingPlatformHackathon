@@ -9,4 +9,5 @@ public interface IUserRepository
     Task<User?> GetByEmail(string email, CancellationToken cancellationToken);
     void Add(User user);
     Task SaveChanges(CancellationToken cancellationToken);
+    Task<Dictionary<long, User>> GetByIdMany(IEnumerable<long> distinctUserIds);
 }
