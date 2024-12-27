@@ -9,6 +9,7 @@ public class DataBaseContext : DbContext
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<PurchaseRequest> PurchaseRequests { get; set; } = null!;
     public DbSet<PurchaseResponse> PurchaseResponses { get; set; } = null!;
+    public DbSet<Message> Messages { get; set; } = null!;
 
     public DataBaseContext()
     {
@@ -73,5 +74,17 @@ public class DataBaseContext : DbContext
             .HasOne(x => x.PurchaseRequest)
             .WithMany(y => y.PurchaseResponses)
             .HasForeignKey(z => z.PurchaseRequestId);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(x => x.Sender)
+            .WithMany(y => y.MessagesAsSender)
+            .HasForeignKey(z => z.SenderId);
+        
+        modelBuilder.Entity<Message>()
+            .HasOne(x => x.Recipient)
+            .WithMany(y => y.MessagesAsRecipient)
+            .HasForeignKey(z => z.RecipientId);
+
+
     }
 }
