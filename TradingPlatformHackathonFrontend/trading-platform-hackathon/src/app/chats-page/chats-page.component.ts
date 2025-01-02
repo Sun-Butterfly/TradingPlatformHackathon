@@ -30,7 +30,8 @@ export class ChatsPageComponent implements OnInit {
   }
 
   goToChat(i: number) {
-    this.router.navigate(['dialog']).then(() => {
+    let companionId = this.chats[i].companionId
+    this.router.navigate(['dialog',companionId]).then(() => {
       if (this.refreshingInterval != -1) {
         clearInterval(this.refreshingInterval)
       }
@@ -47,5 +48,13 @@ export class ChatsPageComponent implements OnInit {
 
   getChatsInfoByUserId() {
     this.http.getChatsInfoByUserId().subscribe(chats => this.chats = chats)
+  }
+
+  goToHome() {
+    this.router.navigate(['home'])
+  }
+
+  goToCreateChat() {
+    this.router.navigate(['create-message'])
   }
 }

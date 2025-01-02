@@ -5,7 +5,8 @@ using TradingPlatformHackathon.Repositories;
 
 namespace TradingPlatformHackathon.MediatR.GetChatInfoByUserId;
 
-public class GetChatInfoByUserIdHandler : IRequestHandler<GetChatInfoByUserIdRequest, Result<GetChatInfoByUserIdResponse>>
+public class
+    GetChatInfoByUserIdHandler : IRequestHandler<GetChatInfoByUserIdRequest, Result<GetChatInfoByUserIdResponse>>
 {
     private readonly IUserRepository _userRepository;
     private readonly IMessageRepository _messageRepository;
@@ -16,22 +17,44 @@ public class GetChatInfoByUserIdHandler : IRequestHandler<GetChatInfoByUserIdReq
         _messageRepository = messageRepository;
     }
 
-    public async Task<Result<GetChatInfoByUserIdResponse>> Handle(GetChatInfoByUserIdRequest request, CancellationToken cancellationToken)
+    public async Task<Result<GetChatInfoByUserIdResponse>> Handle(GetChatInfoByUserIdRequest request,
+        CancellationToken cancellationToken)
     {
-        var chatGroups = await _messageRepository.GetChatInfoByUserId(request.UserId);
+        var chatGroups = await _messageRepository.GetChatGroupsByUserId(request.UserId, cancellationToken);
 
-        var distinctUserIds = chatGroups.Select(x => x.SenderId).Concat(chatGroups.Select(x => x.CompanionId)).Distinct();
+        var distinctUserIds = chatGroups
+            .Select(x => x.SenderId)
+            .Concat(chatGroups
+                .Select(x => x.CompanionId))
+            .Distinct();
 
-        var users = await _userRepository.GetByIdMany(distinctUserIds);
+        var users = await _userRepository.GetByIdMany(distinctUserIds, cancellationToken);
 
-        var chats = chatGroups.Select(x => new ChatInfoDto(
-            x.SenderId == request.UserId ? x.CompanionId : x.SenderId,
-            users[x.SenderId == request.UserId ? x.CompanionId : x.SenderId].Name,
-            x.LatestMessage.Text,
-            x.LatestMessage.SendingTime,
-            x.LatestMessage.IsRead
-        ));
+        var hashset = new HashSet<long>();
 
-        return Result.Ok(new GetChatInfoByUserIdResponse(chats.ToList()));
+        var chats = new Dictionary<long, ChatInfoDto>();
+        
+        foreach (var currentChatGroup in chatGroups)
+        {
+            var chattingWith = currentChatGroup.SenderId == request.UserId ? currentChatGroup.CompanionId : currentChatGroup.SenderId;
+            if (!hashset.Add(chattingWith))
+            {
+                if (chats[chattingWith].LatestMessageTime >= currentChatGroup.LatestMessage.SendingTime)
+                {
+                    continue;   
+                }
+            }
+            
+            var info = new ChatInfoDto(
+                chattingWith,
+                users[chattingWith].Name,
+                currentChatGroup.LatestMessage.Text,
+                currentChatGroup.LatestMessage.SendingTime,
+                currentChatGroup.LatestMessage.IsRead
+            );
+            chats[chattingWith] = info;
+        }
+
+        return Result.Ok(new GetChatInfoByUserIdResponse(chats.Values.ToList()));
     }
 }

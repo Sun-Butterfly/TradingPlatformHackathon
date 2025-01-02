@@ -1,0 +1,8 @@
+<div class="inputFields" [formGroup]="createMessageFormGroup">
+  <label>Кому (id получателя)</label>
+  <p><input type="number" formControlName="companionId"></p>
+  <label>Текст сообщения</label>
+  <p><textarea class="inputMessageText" type="text" formControlName="text"></textarea></p>
+</div>
+<button class="create" (click)="createChat()">Отправить сообщение</button>
+<button class="cancel" (click)="goToCancelCreate()">Отмена</button>

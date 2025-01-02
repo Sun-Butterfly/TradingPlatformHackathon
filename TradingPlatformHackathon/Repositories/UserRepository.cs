@@ -14,20 +14,21 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetById(long id, CancellationToken cancellationToken)
     {
-        return await _db.Users.FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken);
+        return await _db.Users
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 
     public async Task<User?> GetByEmailAndPassword(string email, string password, CancellationToken cancellationToken)
     {
         return await _db.Users.Include(user => user.Role).FirstOrDefaultAsync(x => x.Email == email &&
                 x.Password == password,
-            cancellationToken: cancellationToken);
+            cancellationToken);
     }
 
     public async Task<User?> GetByEmail(string email, CancellationToken cancellationToken)
     {
         return await _db.Users.FirstOrDefaultAsync(x => x.Email == email,
-            cancellationToken: cancellationToken);
+            cancellationToken);
     }
 
     public void Add(User user)
@@ -40,8 +41,10 @@ public class UserRepository : IUserRepository
         await _db.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<Dictionary<long, User>> GetByIdMany(IEnumerable<long> distinctUserIds)
+    public async Task<Dictionary<long, User>> GetByIdMany(IEnumerable<long> userIds, CancellationToken cancellationToken)
     {
-        return await _db.Users.Where(x => distinctUserIds.Contains(x.Id)).ToDictionaryAsync(x => x.Id);
+        return await _db.Users
+            .Where(x => userIds.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, cancellationToken);
     }
 }

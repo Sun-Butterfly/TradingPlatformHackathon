@@ -37,14 +37,16 @@ public class PurchaseRequestRepository : IPurchaseRequestRepository
 
     public async Task<List<GetPurchaseRequestDto>> GetAllNotInWork(CancellationToken cancellationToken)
     {
-        return await _db.PurchaseRequests.Where(x => x.SupplierId == null)
+        return await _db.PurchaseRequests
+            .Where(x => x.SupplierId == null)
             .Select(x =>
                 new GetPurchaseRequestDto(
                     x.Id,
                     x.ProductName,
                     x.ProductCount,
                     x.Cost,
-                    x.BuyerId)).ToListAsync(cancellationToken: cancellationToken);
+                    x.BuyerId))
+            .ToListAsync(cancellationToken: cancellationToken);
     }
 
     public async Task<List<GetPurchaseRequestByBuyerIdDto>> GetNotInWorkByBuyerId(long id,

@@ -1,0 +1,43 @@
+.chatbox{
+  width: 500px;
+  height: 770px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+.messageBox {
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.messageBubbleLeft{
+  justify-content: start;
+}
+
+.messageBubbleRight{
+  justify-content: end;
+}
+.inputMessageText{
+  width: 492px;
+  min-height: 94px;
+  resize: none;
+}
+
+.message-row {
+  display: flex;
+}
+
+.message {
+  background: aliceblue;
+  border-radius: 10px;
+  border: 1px solid #aaa;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.semi {
+  opacity: 0.5;
+}

@@ -1,1 +1,20 @@
-<p>dialog-page works!</p>
+<div class="chatbox">
+  <div class="messageBox">
+    <div class="message-row"
+         *ngFor="let message of messages, let i = index"
+         [class.messageBubbleLeft]="!isUserSender(i)"
+         [class.messageBubbleRight]="isUserSender(i)">
+      <div class="message">
+        <div>{{message.text}}</div>
+        <div class="semi">{{message.sendingTime | date: 'dd.MM.yyyy HH:mm'}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="inputMessage" [formGroup]="sendMessageFormGroup">
+  <form>
+  <textarea class="inputMessageText" type="text" formControlName="text"></textarea>
+  <button class="sendMessage" type="reset" (click)="sendMessage()">Отправить</button>
+  </form>
+</div>
+<button class="home" (click)="goToChats()">Назад к чатам</button>

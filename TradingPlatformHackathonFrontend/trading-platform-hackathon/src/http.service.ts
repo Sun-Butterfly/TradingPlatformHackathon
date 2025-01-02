@@ -52,7 +52,7 @@ export interface GetPurchaseRequestByIdDto {
   cost: number
 }
 
-export interface RedactPurchaseRequestDto{
+export interface RedactPurchaseRequestDto {
   productName: string,
   productCount: number,
   cost: number
@@ -86,12 +86,30 @@ export interface PurchaseResponseInWorkDto {
   buyerId: number
 }
 
-export interface ChatInfo{
+export interface ChatInfo {
   companionId: number,
   companionName: string,
   latestMessage: string,
   latestMessageTime: Date,
   isLatestMessageRead: boolean
+}
+
+export interface Message {
+  senderId: number,
+  recipientId: number,
+  text: string,
+  sendingTime: Date,
+  isMessageRead: boolean
+}
+
+export interface CreateMessageDto {
+  companionId: number,
+  text: string
+}
+
+export interface CreateChatDto {
+  companionId: number,
+  text: string
 }
 
 @Injectable({providedIn: "root"})
@@ -204,8 +222,27 @@ export class HttpService {
     return this.http.post<void>(url, request)
   }
 
-  getChatsInfoByUserId():Observable<ChatInfo[]> {
+  getChatsInfoByUserId(): Observable<ChatInfo[]> {
     const url: string = `${this.baseurl}/Message/GetChatInfoByUserId`
     return this.http.get<ChatInfo[]>(url)
+  }
+
+  getMessagesByUserAndCompanionIds(companionId: number): Observable<Message[]> {
+    const url: string = `${this.baseurl}/Message/GetMessagesByUserAndCompanionIds`
+    return this.http.get<Message[]>(url, {
+      params: {
+        companionId: companionId
+      }
+    })
+  }
+
+  createMessage(request: CreateMessageDto): Observable<void> {
+    const url: string = `${this.baseurl}/Message/CreateMessage`
+    return this.http.post<void>(url, request)
+  }
+
+  createChat(request: CreateChatDto) :Observable<void> {
+    const url: string = `${this.baseurl}/Message/CreateMessage`
+    return this.http.post<void>(url, request)
   }
 }
